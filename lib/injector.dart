@@ -4,11 +4,16 @@ import 'package:customizable_chart/model/services/client/client_http.dart';
 import 'package:customizable_chart/model/services/client/dio/dio_client.dart';
 import 'package:customizable_chart/model/repositories/llm_repository.dart';
 import 'package:customizable_chart/viewmodel/chart_viewmodel.dart';
+import 'package:customizable_chart/viewmodel/settings_viewmodel.dart';
+import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
+import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  sl.registerSingleton<SecureStorage>(SecureStorageImpl());
+
   sl.registerSingleton<ClientHttp>(DioClient());
 
   sl.registerSingleton<LlmRepository>(LLMRepositoryImplementation(sl()));
@@ -16,6 +21,8 @@ Future<void> init() async {
   sl.registerSingleton<GlobalAppLocalizations>(GlobalAppLocalizationsImpl());
 
   sl.registerFactory(() => ChartViewModel());
+
+  sl.registerFactory(() => SettingsViewModel(sl()));
 
   sl.registerFactory(() => ChartDataModel.defaultData());
 }
