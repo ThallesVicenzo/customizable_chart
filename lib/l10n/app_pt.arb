@@ -1,0 +1,109 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Gráfico Customizável",
+  "@appTitle": {
+    "description": "O título da aplicação"
+  },
+  "chartTitle": "Gráfico Customizável",
+  "@chartTitle": {
+    "description": "O título do gráfico"
+  },
+  "customizationControls": "Controles de Customização",
+  "@customizationControls": {
+    "description": "Título da seção de controles de customização"
+  },
+  "colors": "Cores:",
+  "@colors": {
+    "description": "Rótulo da seção de cores"
+  },
+  "thickness": "Espessura:",
+  "@thickness": {
+    "description": "Rótulo do slider de espessura da linha"
+  },
+  "blue": "Azul",
+  "@blue": {
+    "description": "Nome da cor azul"
+  },
+  "red": "Vermelho",
+  "@red": {
+    "description": "Nome da cor vermelha"
+  },
+  "green": "Verde",
+  "@green": {
+    "description": "Nome da cor verde"
+  },
+  "purple": "Roxo",
+  "@purple": {
+    "description": "Nome da cor roxa"
+  },
+  "orange": "Laranja",
+  "@orange": {
+    "description": "Nome da cor laranja"
+  },
+  "add": "Adicionar",
+  "@add": {
+    "description": "Rótulo do botão adicionar"
+  },
+  "remove": "Remover",
+  "@remove": {
+    "description": "Rótulo do botão remover"
+  },
+  "reset": "Reiniciar",
+  "@reset": {
+    "description": "Rótulo do botão reiniciar"
+  },
+  "grid": "Grade",
+  "@grid": {
+    "description": "Rótulo do toggle de grade"
+  },
+  "tooltip": "Dica",
+  "@tooltip": {
+    "description": "Rótulo do toggle de dica"
+  },
+  "week": "S{number}",
+  "@week": {
+    "description": "Rótulo da semana com número",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "textPrompts": "Prompts de Texto",
+  "@textPrompts": {
+    "description": "Título da seção de prompts de texto"
+  },
+  "promptHint": "Tente: \"deixe vermelho e grosso\"",
+  "@promptHint": {
+    "description": "Texto de dica para o campo de entrada de prompt"
+  },
+  "tryExamples": "Experimente estes exemplos:",
+  "@tryExamples": {
+    "description": "Rótulo para prompts de exemplo"
+  },
+  "promptErrorNotRecognized": "Erro: Prompt não reconhecido. Tente um dos exemplos.",
+  "@promptErrorNotRecognized": {
+    "description": "Mensagem de erro quando o prompt não é reconhecido"
+  },
+  "promptRedBold": "deixe vermelho e grosso",
+  "@promptRedBold": {
+    "description": "Prompt para deixar o gráfico vermelho e grosso"
+  },
+  "promptBlueSales": "mostre dados de vendas em azul",
+  "@promptBlueSales": {
+    "description": "Prompt para mostrar dados de vendas em azul"
+  },
+  "promptMinimalGrid": "crie gráfico minimalista com grade",
+  "@promptMinimalGrid": {
+    "description": "Prompt para criar gráfico minimalista com grade"
+  },
+  "promptOrangeTrending": "visão laranja vibrante crescente",
+  "@promptOrangeTrending": {
+    "description": "Prompt para visão laranja vibrante crescente"
+  },
+  "promptPurpleThick": "tema roxo com linhas grossas",
+  "@promptPurpleThick": {
+    "description": "Prompt para tema roxo com linhas grossas"
+  }
+}

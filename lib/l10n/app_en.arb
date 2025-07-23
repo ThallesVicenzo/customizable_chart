@@ -1,0 +1,109 @@
+{
+  "@@locale": "en",
+  "appTitle": "Customizable Chart",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "chartTitle": "Customizable Chart",
+  "@chartTitle": {
+    "description": "The title of the chart"
+  },
+  "customizationControls": "Customization Controls",
+  "@customizationControls": {
+    "description": "Title for the customization controls section"
+  },
+  "colors": "Colors:",
+  "@colors": {
+    "description": "Label for colors section"
+  },
+  "thickness": "Thickness:",
+  "@thickness": {
+    "description": "Label for line thickness slider"
+  },
+  "blue": "Blue",
+  "@blue": {
+    "description": "Blue color name"
+  },
+  "red": "Red",
+  "@red": {
+    "description": "Red color name"
+  },
+  "green": "Green",
+  "@green": {
+    "description": "Green color name"
+  },
+  "purple": "Purple",
+  "@purple": {
+    "description": "Purple color name"
+  },
+  "orange": "Orange",
+  "@orange": {
+    "description": "Orange color name"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add button label"
+  },
+  "remove": "Remove",
+  "@remove": {
+    "description": "Remove button label"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset button label"
+  },
+  "grid": "Grid",
+  "@grid": {
+    "description": "Grid toggle label"
+  },
+  "tooltip": "Tooltip",
+  "@tooltip": {
+    "description": "Tooltip toggle label"
+  },
+  "week": "W{number}",
+  "@week": {
+    "description": "Week label with number",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "textPrompts": "Text Prompts",
+  "@textPrompts": {
+    "description": "Title for the text prompts section"
+  },
+  "promptHint": "Try: \"make it red and bold\"",
+  "@promptHint": {
+    "description": "Hint text for the prompt input field"
+  },
+  "tryExamples": "Try these examples:",
+  "@tryExamples": {
+    "description": "Label for example prompts"
+  },
+  "promptErrorNotRecognized": "Error: Prompt not recognized. Try one of the examples.",
+  "@promptErrorNotRecognized": {
+    "description": "Error message when prompt is not recognized"
+  },
+  "promptRedBold": "make it red and bold",
+  "@promptRedBold": {
+    "description": "Prompt to make chart red and bold"
+  },
+  "promptBlueSales": "show sales data in blue",
+  "@promptBlueSales": {
+    "description": "Prompt to show sales data in blue"
+  },
+  "promptMinimalGrid": "create minimal chart with grid",
+  "@promptMinimalGrid": {
+    "description": "Prompt to create minimal chart with grid"
+  },
+  "promptOrangeTrending": "bright orange trending view",
+  "@promptOrangeTrending": {
+    "description": "Prompt for bright orange trending view"
+  },
+  "promptPurpleThick": "purple theme with thick lines",
+  "@promptPurpleThick": {
+    "description": "Prompt for purple theme with thick lines"
+  }
+}
