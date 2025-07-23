@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/models/chart_data_model.dart';
 import '../model/repositories/llm_repository.dart';
-import '../model/failures/llm_failure.dart';
+import '../model/services/client/failures/llm_failure.dart';
 import '../injector.dart';
 
 class ChartViewModel extends ChangeNotifier {

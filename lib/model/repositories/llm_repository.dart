@@ -4,7 +4,7 @@ import 'package:customizable_chart/model/services/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart';
 import '../models/chart_data_model.dart';
-import '../failures/llm_failure.dart';
+import '../services/client/failures/llm_failure.dart';
 
 abstract class LlmRepository {
   Future<Either<LlmFailure, Map<String, dynamic>>> processNaturalLanguagePrompt(
