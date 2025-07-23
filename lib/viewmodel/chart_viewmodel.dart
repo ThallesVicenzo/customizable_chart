@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/models/chart_data_model.dart';
 import '../model/repositories/llm_repository.dart';
+import '../model/failures/llm_failure.dart';
 import '../injector.dart';
 
 class ChartViewModel extends ChangeNotifier {
@@ -167,16 +168,25 @@ class ChartViewModel extends ChangeNotifier {
 
     return result.fold(
       (failure) {
-        // Handle failure
-        _lastPromptResult = errorMessage;
-        Future.delayed(const Duration(seconds: 3), () {
+        String failureMessage = errorMessage;
+        if (failure is LlmAuthenticationFailure) {
+          failureMessage = failure.message;
+        } else if (failure is LlmNetworkFailure) {
+          failureMessage = failure.message;
+        } else if (failure is LlmParsingFailure) {
+          failureMessage = failure.message;
+        } else if (failure is LlmUnknownFailure) {
+          failureMessage = failure.message;
+        }
+
+        _lastPromptResult = failureMessage;
+        Future.delayed(const Duration(seconds: 5), () {
           clearPromptResult();
         });
         notifyListeners();
         return false;
       },
       (data) {
-        // Handle success
         _chartData = repository.configToChartData(data);
         _lastPromptResult = null;
         notifyListeners();
