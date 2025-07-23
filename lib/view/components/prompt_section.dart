@@ -148,21 +148,6 @@ class _PromptSectionState extends State<PromptSection> {
                   ),
                 ),
               ),
-              if (widget.viewModel.lastPromptResult != null) ...[
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.red.shade50,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.red.shade200),
-                  ),
-                  child: Text(
-                    widget.viewModel.lastPromptResult!,
-                    style: TextStyle(fontSize: 12, color: Colors.red.shade700),
-                  ),
-                ),
-              ],
             ],
           ),
         );
