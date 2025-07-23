@@ -105,5 +105,120 @@
   "promptPurpleThick": "tema roxo com linhas grossas",
   "@promptPurpleThick": {
     "description": "Prompt para tema roxo com linhas grossas"
+  },
+  "settings": "Configurações",
+  "@settings": {
+    "description": "Título da tela de configurações"
+  },
+  "aiConfiguration": "Configuração de IA",
+  "@aiConfiguration": {
+    "description": "Título da seção de configuração de IA"
+  },
+  "aiConfigurationDescription": "Configure sua chave da API OpenAI para usar a funcionalidade de personalização inteligente do gráfico.",
+  "@aiConfigurationDescription": {
+    "description": "Descrição da configuração de IA"
+  },
+  "openaiApiKey": "Chave da API OpenAI",
+  "@openaiApiKey": {
+    "description": "Label para o campo da chave da API"
+  },
+  "apiKeyHint": "sk-...",
+  "@apiKeyHint": {
+    "description": "Hint para o campo da chave da API"
+  },
+  "editKey": "Editar chave",
+  "@editKey": {
+    "description": "Tooltip para editar chave"
+  },
+  "removeKey": "Remover chave",
+  "@removeKey": {
+    "description": "Tooltip para remover chave"
+  },
+  "saveKey": "Salvar Chave",
+  "@saveKey": {
+    "description": "Texto do botão salvar chave"
+  },
+  "pleaseEnterApiKey": "Por favor, insira uma chave da API",
+  "@pleaseEnterApiKey": {
+    "description": "Mensagem de erro quando não há chave inserida"
+  },
+  "apiKeySavedSuccess": "Chave da API salva com sucesso!",
+  "@apiKeySavedSuccess": {
+    "description": "Mensagem de sucesso ao salvar chave"
+  },
+  "errorSavingKey": "Erro ao salvar a chave: {error}",
+  "@errorSavingKey": {
+    "description": "Mensagem de erro ao salvar chave",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Connection error"
+      }
+    }
+  },
+  "removeApiKeyTitle": "Remover Chave da API",
+  "@removeApiKeyTitle": {
+    "description": "Título do dialog de confirmação para remover chave"
+  },
+  "removeApiKeyConfirmation": "Tem certeza que deseja remover a chave da API? Você não conseguirá usar a funcionalidade de IA até configurar uma nova chave.",
+  "@removeApiKeyConfirmation": {
+    "description": "Texto de confirmação para remover chave"
+  },
+  "cancel": "Cancelar",
+  "@cancel": {
+    "description": "Texto do botão cancelar"
+  },
+  "removeApiKey": "Remover",
+  "@removeApiKey": {
+    "description": "Texto do botão remover API key"
+  },
+  "apiKeyRemovedSuccess": "Chave da API removida com sucesso!",
+  "@apiKeyRemovedSuccess": {
+    "description": "Mensagem de sucesso ao remover chave"
+  },
+  "howToGetApiKey": "Como obter uma chave da API OpenAI",
+  "@howToGetApiKey": {
+    "description": "Título da seção de instruções"
+  },
+  "apiKeyStep1": "1. Acesse: https://platform.openai.com/api-keys",
+  "@apiKeyStep1": {
+    "description": "Primeiro passo para obter chave"
+  },
+  "apiKeyStep2": "2. Crie uma conta gratuita (se não tiver)",
+  "@apiKeyStep2": {
+    "description": "Segundo passo para obter chave"
+  },
+  "apiKeyStep3": "3. Clique em \"Create new secret key\"",
+  "@apiKeyStep3": {
+    "description": "Terceiro passo para obter chave"
+  },
+  "apiKeyStep4": "4. Copie a chave gerada",
+  "@apiKeyStep4": {
+    "description": "Quarto passo para obter chave"
+  },
+  "apiKeyStep5": "5. Cole aqui e clique em \"Salvar Chave\"",
+  "@apiKeyStep5": {
+    "description": "Quinto passo para obter chave"
+  },
+  "openaiCreditInfo": "💡 A OpenAI oferece $5 de crédito gratuito para novos usuários!",
+  "@openaiCreditInfo": {
+    "description": "Informação sobre créditos gratuitos"
+  },
+  "configure": "Configurar",
+  "@configure": {
+    "description": "Texto do botão configurar"
+  },
+  "aiConfigurationShort": "Configuração de IA",
+  "@aiConfigurationShort": {
+    "description": "Título curto da configuração de IA"
+  },
+  "promptErrorApiKeyRequired": "Chave da API OpenAI não configurada",
+  "@promptErrorApiKeyRequired": {
+    "description": "Mensagem de erro quando a chave da API é necessária, mas não está definida"
+  },
+  "promptErrorProcessingRequest": "Erro ao processar solicitação",
+  "@promptErrorProcessingRequest": {
+    "description": "Mensagem de erro quando há um problema ao processar a solicitação"
   }
+
 }

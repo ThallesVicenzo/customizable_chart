@@ -105,5 +105,119 @@
   "promptPurpleThick": "purple theme with thick lines",
   "@promptPurpleThick": {
     "description": "Prompt for purple theme with thick lines"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "aiConfiguration": "AI Configuration",
+  "@aiConfiguration": {
+    "description": "AI configuration section title"
+  },
+  "aiConfigurationDescription": "Configure your OpenAI API key to use the intelligent chart personalization functionality.",
+  "@aiConfigurationDescription": {
+    "description": "AI configuration description"
+  },
+  "openaiApiKey": "OpenAI API Key",
+  "@openaiApiKey": {
+    "description": "Label for API key field"
+  },
+  "apiKeyHint": "sk-...",
+  "@apiKeyHint": {
+    "description": "Hint for API key field"
+  },
+  "editKey": "Edit key",
+  "@editKey": {
+    "description": "Tooltip for edit key"
+  },
+  "removeKey": "Remove key",
+  "@removeKey": {
+    "description": "Tooltip for remove key"
+  },
+  "saveKey": "Save Key",
+  "@saveKey": {
+    "description": "Save key button text"
+  },
+  "pleaseEnterApiKey": "Please enter an API key",
+  "@pleaseEnterApiKey": {
+    "description": "Error message when no key is entered"
+  },
+  "apiKeySavedSuccess": "API key saved successfully!",
+  "@apiKeySavedSuccess": {
+    "description": "Success message when saving key"
+  },
+  "errorSavingKey": "Error saving key: {error}",
+  "@errorSavingKey": {
+    "description": "Error message when saving key",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Connection error"
+      }
+    }
+  },
+  "removeApiKeyTitle": "Remove API Key",
+  "@removeApiKeyTitle": {
+    "description": "Title for remove key confirmation dialog"
+  },
+  "removeApiKeyConfirmation": "Are you sure you want to remove the API key? You won't be able to use the AI functionality until you configure a new key.",
+  "@removeApiKeyConfirmation": {
+    "description": "Confirmation text for removing key"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "removeApiKey": "Remove",
+  "@removeApiKey": {
+    "description": "Remove API key button text"
+  },
+  "apiKeyRemovedSuccess": "API key removed successfully!",
+  "@apiKeyRemovedSuccess": {
+    "description": "Success message when removing key"
+  },
+  "howToGetApiKey": "How to get an OpenAI API key",
+  "@howToGetApiKey": {
+    "description": "Instructions section title"
+  },
+  "apiKeyStep1": "1. Visit: https://platform.openai.com/api-keys",
+  "@apiKeyStep1": {
+    "description": "First step to get key"
+  },
+  "apiKeyStep2": "2. Create a free account (if you don't have one)",
+  "@apiKeyStep2": {
+    "description": "Second step to get key"
+  },
+  "apiKeyStep3": "3. Click \"Create new secret key\"",
+  "@apiKeyStep3": {
+    "description": "Third step to get key"
+  },
+  "apiKeyStep4": "4. Copy the generated key",
+  "@apiKeyStep4": {
+    "description": "Fourth step to get key"
+  },
+  "apiKeyStep5": "5. Paste it here and click \"Save Key\"",
+  "@apiKeyStep5": {
+    "description": "Fifth step to get key"
+  },
+  "openaiCreditInfo": "💡 OpenAI offers $5 in free credits for new users!",
+  "@openaiCreditInfo": {
+    "description": "Information about free credits"
+  },
+  "configure": "Configure",
+  "@configure": {
+    "description": "Configure button text"
+  },
+  "aiConfigurationShort": "AI Configuration",
+  "@aiConfigurationShort": {
+    "description": "Short AI configuration title"
+  },
+  "promptErrorApiKeyRequired": "OpenAI API key not configured",
+  "@promptErrorApiKeyRequired": {
+    "description": "Error message when API key is required but not set"
+  },
+  "promptErrorProcessingRequest": "Error processing request",
+  "@promptErrorProcessingRequest": {
+    "description": "Error message when there is an issue processing the request"
   }
 }
