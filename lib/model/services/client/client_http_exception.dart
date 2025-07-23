@@ -1,0 +1,58 @@
+import 'dart:developer';
+
+import 'client_http_request.dart';
+
+class ClientHttpException implements Exception {
+  String? path;
+  String? message;
+  int? statusCode;
+  dynamic error;
+  ClientHttpRequest? response;
+  dynamic requestData;
+  Map<String, dynamic>? queryParameters;
+
+  ClientHttpException({
+    this.path,
+    this.message,
+    this.statusCode,
+    required this.error,
+    this.response,
+    this.requestData,
+    this.queryParameters,
+  }) {
+    log(toString(), name: "ClientHttpException");
+  }
+
+  @override
+  String toString() {
+    return 'ClientHttpException( '
+        'message: $responseMessage, \n'
+        'statusCode: $responseCode, \n'
+        'error: $error, \n'
+        'Path: $path \n'
+        'response data: ${response.toString()}) \n';
+  }
+
+  int? get responseCode {
+    int? responseStatusCode;
+    if (response?.data is Map) {
+      responseStatusCode = response?.data?["errorCode"];
+    } else {
+      responseStatusCode = response?.statusCode;
+    }
+
+    return responseStatusCode ?? statusCode;
+  }
+
+  String? get responseMessage {
+    String? responseMessage;
+    if (response?.data is Map) {
+      responseMessage = response?.data?["errorMessage"];
+      responseMessage ??= response?.data?["message"];
+    } else {
+      responseMessage = response?.statusMessage;
+    }
+
+    return responseMessage ?? message;
+  }
+}
