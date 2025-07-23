@@ -24,12 +24,6 @@ class _ChartPageState extends State<ChartPage> {
   }
 
   @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -55,8 +49,11 @@ class _ChartPageState extends State<ChartPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                flex: 1,
-                child: Padding(
+                child: Container(
+                  constraints: const BoxConstraints(
+                    minHeight: 180,
+                    maxHeight: 300,
+                  ),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AnimatedBuilder(
                     animation: _viewModel,
@@ -66,18 +63,28 @@ class _ChartPageState extends State<ChartPage> {
                   ),
                 ),
               ),
-              Text(
-                _localizations.textPrompts,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  _localizations.textPrompts,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              PromptSection(viewModel: _viewModel),
+              Flexible(child: PromptSection(viewModel: _viewModel)),
             ],
           ),
         ),
       ),
+      resizeToAvoidBottomInset: true,
     );
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 }
