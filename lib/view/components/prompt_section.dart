@@ -2,6 +2,7 @@ import 'package:customizable_chart/injector.dart';
 import 'package:customizable_chart/l10n/global_app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../../viewmodel/chart_viewmodel.dart';
+import 'preset_button.dart';
 
 class PromptSection extends StatefulWidget {
   final ChartViewModel viewModel;
@@ -12,32 +13,18 @@ class PromptSection extends StatefulWidget {
 }
 
 class _PromptSectionState extends State<PromptSection> {
-  final FocusNode _promptFocusNode = FocusNode();
   final AppLocalizations localizations = sl<GlobalAppLocalizations>().current;
 
   @override
   void dispose() {
-    _promptFocusNode.dispose();
+    widget.viewModel.promptFocusNode.dispose();
     super.dispose();
   }
 
-  void _processPrompt() {
-    final prompt = widget.viewModel.promptController.text.trim();
-    final success = widget.viewModel.processTextPromptWithResult(
-      prompt,
+  Future<void> _processPrompt() async {
+    await widget.viewModel.processPrompt(
       localizations.promptErrorNotRecognized,
     );
-    if (success) {
-      _promptFocusNode.unfocus();
-    }
-  }
-
-  void _useExamplePrompt(String prompt) {
-    widget.viewModel.useExamplePrompt(
-      prompt,
-      localizations.promptErrorNotRecognized,
-    );
-    _promptFocusNode.unfocus();
   }
 
   @override
@@ -48,7 +35,7 @@ class _PromptSectionState extends State<PromptSection> {
         return Container(
           constraints: BoxConstraints(
             maxHeight: MediaQuery.of(context).size.height * 0.45,
-            minHeight: 200,
+            minHeight: 120,
           ),
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -58,95 +45,125 @@ class _PromptSectionState extends State<PromptSection> {
               topRight: Radius.circular(20),
             ),
           ),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: widget.viewModel.promptController,
-                        focusNode: _promptFocusNode,
-                        decoration: InputDecoration(
-                          hintText: localizations.promptHint,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.send, size: 20),
-                            onPressed: () => _processPrompt(),
-                          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: widget.viewModel.promptController,
+                      focusNode: widget.viewModel.promptFocusNode,
+                      decoration: InputDecoration(
+                        hintText: localizations.promptHint,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        onSubmitted: (_) => _processPrompt(),
-                        style: const TextStyle(fontSize: 14),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        suffixIcon:
+                            widget.viewModel.isProcessing
+                                ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  ),
+                                )
+                                : IconButton(
+                                  icon: const Icon(Icons.send, size: 20),
+                                  onPressed: () => _processPrompt(),
+                                ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  localizations.tryExamples,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Wrap(
-                  spacing: 4,
-                  runSpacing: 4,
-                  children:
-                      widget.viewModel.getExamplePrompts().map((prompt) {
-                        return GestureDetector(
-                          onTap: () => _useExamplePrompt(prompt),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade50,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.blue.shade200),
-                            ),
-                            child: Text(
-                              prompt,
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.blue.shade700,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                ),
-                if (widget.viewModel.lastPromptResult != null) ...[
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.red.shade200),
-                    ),
-                    child: Text(
-                      widget.viewModel.lastPromptResult!,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.red.shade700,
-                      ),
+                      onSubmitted: (_) => _processPrompt(),
+                      style: const TextStyle(fontSize: 14),
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                localizations.tryExamples,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      PresetButton(
+                        prompt: localizations.promptBlueSales,
+                        color: Colors.blue,
+                        onPressed:
+                            () => widget.viewModel.processSimulatedPrompt(
+                              localizations.promptBlueSales,
+                            ),
+                      ),
+                      PresetButton(
+                        prompt: localizations.promptRedBold,
+                        color: Colors.red,
+                        onPressed:
+                            () => widget.viewModel.processSimulatedPrompt(
+                              localizations.promptRedBold,
+                            ),
+                      ),
+                      PresetButton(
+                        prompt: localizations.promptMinimalGrid,
+                        color: Colors.grey,
+                        onPressed:
+                            () => widget.viewModel.processSimulatedPrompt(
+                              localizations.promptMinimalGrid,
+                            ),
+                      ),
+                      PresetButton(
+                        prompt: localizations.promptOrangeTrending,
+                        color: Colors.orange,
+                        onPressed:
+                            () => widget.viewModel.processSimulatedPrompt(
+                              localizations.promptOrangeTrending,
+                            ),
+                      ),
+                      PresetButton(
+                        prompt: localizations.promptPurpleThick,
+                        color: Colors.purple,
+                        onPressed:
+                            () => widget.viewModel.processSimulatedPrompt(
+                              localizations.promptPurpleThick,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              if (widget.viewModel.lastPromptResult != null) ...[
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red.shade200),
+                  ),
+                  child: Text(
+                    widget.viewModel.lastPromptResult!,
+                    style: TextStyle(fontSize: 12, color: Colors.red.shade700),
+                  ),
+                ),
               ],
-            ),
+            ],
           ),
         );
       },
