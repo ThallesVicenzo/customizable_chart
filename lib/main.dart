@@ -2,10 +2,13 @@ import 'package:customizable_chart/l10n/global_app_localizations.dart';
 import 'package:customizable_chart/view/chart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:customizable_chart/injector.dart' as injector;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,
@@ -30,12 +33,24 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      builder: (context, child) {
-        injector.sl<GlobalAppLocalizations>().setAppLocalizations(
-          AppLocalizations.of(context)!,
-        );
-        return ChartPage();
-      },
+      home: Builder(
+        builder: (context) {
+          injector.sl<GlobalAppLocalizations>().setAppLocalizations(
+            AppLocalizations.of(context)!,
+          );
+
+          return GestureDetector(
+            onTap: () {
+              ScaffoldMessenger.of(
+                context,
+              ).removeCurrentSnackBar(reason: SnackBarClosedReason.swipe);
+
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+            child: const ChartPage(),
+          );
+        },
+      ),
     );
   }
 }
