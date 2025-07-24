@@ -1,10 +1,13 @@
 import 'package:customizable_chart/view/components/customizable_chart.dart';
 import 'package:customizable_chart/view/components/prompt_section.dart';
+import 'package:customizable_chart/view/components/error_snackbar.dart';
 import 'package:customizable_chart/view/settings_page.dart';
 import 'package:customizable_chart/viewmodel/chart_viewmodel.dart';
 import 'package:customizable_chart/l10n/global_app_localizations.dart';
 import 'package:customizable_chart/injector.dart';
 import 'package:flutter/material.dart';
+
+import 'package:customizable_chart/debug/secret_reset_helper.dart';
 
 class ChartPage extends StatefulWidget {
   const ChartPage({super.key});
@@ -30,61 +33,10 @@ class _ChartPageState extends State<ChartPage> {
     if (_viewModel.lastPromptResult != null &&
         _viewModel.lastPromptResult!.isNotEmpty &&
         mounted) {
-      String simplifiedMessage;
-      bool isApiKeyError = _viewModel.lastPromptResult!.contains(
-        'To use the AI functionality',
-      );
-
-      if (isApiKeyError) {
-        simplifiedMessage = _localizations.promptErrorApiKeyRequired;
-      } else {
-        simplifiedMessage = _localizations.promptErrorProcessingRequest;
-      }
-
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content:
-              isApiKeyError
-                  ? Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          simplifiedMessage,
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SettingsPage(),
-                            ),
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          foregroundColor: Colors.white,
-                          backgroundColor: Colors.white.withValues(alpha: 0.2),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8,
-                          ),
-                        ),
-                        child: Text(_localizations.settings),
-                      ),
-                    ],
-                  )
-                  : Text(
-                    simplifiedMessage,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-          backgroundColor: isApiKeyError ? Colors.orange[800] : Colors.red[700],
-          duration: const Duration(seconds: 5),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
+      ErrorSnackbar.show(
+        context: context,
+        errorMessage: _viewModel.lastPromptResult!,
+        localizations: _localizations,
       );
     }
   }
@@ -97,7 +49,12 @@ class _ChartPageState extends State<ChartPage> {
         title: AnimatedBuilder(
           animation: _viewModel,
           builder: (context, child) {
-            return Text(_localizations.chartTitle);
+            return GestureDetector(
+              onTap: () {
+                SecretResetHelper.handleTitleTap(context: context);
+              },
+              child: Text(_localizations.chartTitle),
+            );
           },
         ),
         centerTitle: true,
