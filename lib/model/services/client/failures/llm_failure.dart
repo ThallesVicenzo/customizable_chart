@@ -56,3 +56,15 @@ class LlmUnknownFailure extends LlmFailure {
   @override
   String toString() => 'LlmUnknownFailure(message: $message)';
 }
+
+class LlmInvalidCommandFailure extends LlmFailure {
+  final String message;
+
+  const LlmInvalidCommandFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+
+  @override
+  String toString() => 'LlmInvalidCommandFailure(message: $message)';
+}
