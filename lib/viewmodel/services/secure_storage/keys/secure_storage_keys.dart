@@ -1,6 +1,6 @@
 enum SecureStorageKeys {
-  getFavoriteCoins('favorite_coins'),
-  openaiApiKey('openai_api_key');
+  openaiApiKey('openai_api_key'),
+  fallbackApiUsageCount('fallback_api_usage_count');
 
   const SecureStorageKeys(this.key);
 
