@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
 import 'package:customizable_chart/viewmodel/services/secure_storage/keys/secure_storage_keys.dart';
+import 'package:customizable_chart/model/services/environment.dart';
 import 'package:customizable_chart/l10n/global_app_localizations.dart';
 import 'package:customizable_chart/injector.dart';
 
 class SettingsViewModel extends ChangeNotifier {
   final SecureStorage _secureStorage;
+  final EnvironmentService _environmentService;
   late final AppLocalizations _localizations;
 
-  SettingsViewModel(this._secureStorage) {
+  SettingsViewModel(this._secureStorage)
+    : _environmentService = sl<EnvironmentService>() {
     _localizations = sl<GlobalAppLocalizations>().current;
     loadApiKey();
   }
@@ -99,5 +102,22 @@ class SettingsViewModel extends ChangeNotifier {
     _successMessage = null;
     _errorMessage = null;
     notifyListeners();
+  }
+
+  Future<Map<String, dynamic>> getApiUsageInfo() async {
+    return await _environmentService.getTokenUsageInfo();
+  }
+
+  Future<String> getUsageStatusMessage() async {
+    final info = await getApiUsageInfo();
+
+    if (info['hasUserToken'] == true) {
+      return _localizations.personalApiKeyActive;
+    } else if (info['canUseFallback'] == true) {
+      final remaining = info['remainingFallbackUses'];
+      return _localizations.freeTrialRemaining(remaining);
+    } else {
+      return _localizations.freeTrialExpiredStatus;
+    }
   }
 }

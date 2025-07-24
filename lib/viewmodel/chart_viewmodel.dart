@@ -175,6 +175,8 @@ class ChartViewModel extends ChangeNotifier {
           failureMessage = failure.message;
         } else if (failure is LlmParsingFailure) {
           failureMessage = failure.message;
+        } else if (failure is LlmInvalidCommandFailure) {
+          failureMessage = failure.message;
         } else if (failure is LlmUnknownFailure) {
           failureMessage = failure.message;
         }
