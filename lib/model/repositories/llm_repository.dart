@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:customizable_chart/model/services/client/client_http.dart';
 import 'package:customizable_chart/model/services/environment.dart';
-import 'package:flutter/material.dart';
+import 'package:customizable_chart/utils/llm_parser.dart';
+import 'package:customizable_chart/l10n/global_app_localizations.dart';
+import 'package:customizable_chart/injector.dart';
 import 'package:dartz/dartz.dart';
 import '../models/chart_data_model.dart';
 import '../services/client/failures/llm_failure.dart';
@@ -15,95 +18,108 @@ abstract class LlmRepository {
 
 class LLMRepositoryImplementation implements LlmRepository {
   final ClientHttp clientHttp;
+  final EnvironmentService _environmentService;
+  AppLocalizations? _localizations;
 
-  LLMRepositoryImplementation(this.clientHttp);
+  LLMRepositoryImplementation(this.clientHttp)
+    : _environmentService = sl<EnvironmentService>();
+
+  AppLocalizations get _loc {
+    _localizations ??= sl<GlobalAppLocalizations>().current;
+    return _localizations!;
+  }
 
   @override
   Future<Either<LlmFailure, Map<String, dynamic>>> processNaturalLanguagePrompt(
     String userInput,
   ) async {
     try {
-      final token = await authToken;
+      final token = await _environmentService.getAuthToken();
+      final tokenInfo = await _environmentService.getTokenUsageInfo();
+
       if (token == null || token.isEmpty) {
-        return const Left(
-          LlmAuthenticationFailure(
-            message:
-                'To use the AI functionality, you need to configure your OpenAI key:\n\n'
-                '1. Access app settings\n'
-                '2. Tap "Configure OpenAI API"\n'
-                '3. Enter your API key\n\n'
-                'To get a free key:\n'
-                '• Visit: https://platform.openai.com/api-keys\n'
-                '• Create an account (if you don\'t have one)\n'
-                '• Generate a new API Key\n\n'
-                'OpenAI offers free credits for new users!',
-          ),
+        String message;
+
+        log(
+          'Authentication failed - token is null or empty',
+          name: 'LLMRepository',
         );
+        log('Token info: $tokenInfo', name: 'LLMRepository');
+
+        if (tokenInfo['hasUserToken'] == false &&
+            tokenInfo['canUseFallback'] == false) {
+          message = _loc.freeTrialExpired(tokenInfo['totalFallbackUses']);
+        } else if (tokenInfo['hasUserToken'] == false &&
+            tokenInfo['canUseFallback'] == true) {
+          final remaining = tokenInfo['remainingFallbackUses'];
+          message = _loc.freeTrialActive(remaining);
+        } else {
+          message = _loc.authenticationError;
+        }
+
+        return Left(LlmAuthenticationFailure(message: message));
       }
 
-      final response = await _callLLMAPI(userInput);
+      final response = await _callLLMAPI(userInput, token);
       if (response != null) {
-        final parsedResponse = _parseStructuredResponse(response);
+        log('LLM API response received successfully', name: 'LLMRepository');
+        final parsedResponse = LlmParser.parseStructuredResponse(response);
         if (parsedResponse != null) {
+          // Check for invalid command error
+          if (parsedResponse['error'] == 'INVALID_COMMAND') {
+            log('Invalid command detected: $userInput', name: 'LLMRepository');
+            return Left(
+              LlmInvalidCommandFailure(message: _loc.promptErrorInvalidCommand),
+            );
+          }
           return Right(parsedResponse);
         } else {
-          return const Left(
-            LlmParsingFailure(
-              message:
-                  'Unable to interpret AI response. Try rephrasing your request.',
-            ),
+          log('Failed to parse LLM response: $response', name: 'LLMRepository');
+          return Left(
+            LlmParsingFailure(message: _loc.unableToInterpretResponse),
           );
         }
       } else {
-        return const Left(
-          LlmNetworkFailure(
-            message:
-                'Error connecting to OpenAI API. Check your internet connection and try again.',
-          ),
-        );
+        log('LLM API returned null response', name: 'LLMRepository');
+        return Left(LlmNetworkFailure(message: _loc.networkError));
       }
     } catch (e) {
       final errorMessage = e.toString();
+      log(
+        'Exception in processNaturalLanguagePrompt: $e',
+        name: 'LLMRepository',
+      );
+      log('Error message: $errorMessage', name: 'LLMRepository');
 
-      // Specific handling for quota exceeded error
       if (errorMessage.contains('insufficient_quota') ||
           errorMessage.contains('Too Many Requests') ||
           errorMessage.contains('429')) {
-        return const Left(
-          LlmUnknownFailure(
-            message:
-                'OpenAI API quota exceeded. To continue using AI:\n\n'
-                '1. Visit: https://platform.openai.com/settings/organization/billing\n'
-                '2. Add a payment method\n'
-                '3. Or wait for the free quota reset\n\n'
-                'Alternatively, you can use the example buttons that work without AI.',
-          ),
-        );
+        log('API quota exceeded error detected', name: 'LLMRepository');
+        return Left(LlmUnknownFailure(message: _loc.apiQuotaExceeded));
       }
 
       if (errorMessage.contains('model_not_found') ||
           errorMessage.contains('404')) {
-        return const Left(
-          LlmUnknownFailure(
-            message:
-                'AI model not available. Your OpenAI account may not have access to GPT-3.5.\n\n'
-                'Try using the example buttons that work without AI.',
-          ),
-        );
+        log('Model not found error detected', name: 'LLMRepository');
+        return Left(LlmUnknownFailure(message: _loc.modelNotAvailable));
       }
 
+      log('Unexpected error: $errorMessage', name: 'LLMRepository');
       return Left(
-        LlmUnknownFailure(
-          message:
-              'Unexpected error: ${e.toString()}\n\n'
-              'Check your OpenAI API key and try again.',
-        ),
+        LlmUnknownFailure(message: _loc.unexpectedError(e.toString())),
       );
     }
   }
 
-  Future<String?> _callLLMAPI(String userInput) async {
-    final token = await authToken;
+  Future<String?> _callLLMAPI(String userInput, String token) async {
+    log(
+      'Making LLM API call for input: ${userInput.length > 100 ? "${userInput.substring(0, 100)}..." : userInput}',
+      name: 'LLMRepository',
+    );
+    log(
+      'Using token: ${token.isNotEmpty ? "Token present (${token.length} chars)" : "No token"}',
+      name: 'LLMRepository',
+    );
 
     final requestBody = {
       'model': 'gpt-3.5-turbo',
@@ -113,15 +129,34 @@ class LLMRepositoryImplementation implements LlmRepository {
           'content':
               '''You are a chart configuration assistant. Parse user requests and return ONLY valid JSON with chart configuration.
 
+IMPORTANT VALIDATION: Before processing any request, check if it's related to chart customization. If the user asks about anything NOT related to chart colors, appearance, line thickness, grid, tooltip, or data visualization, respond with this EXACT format:
+{
+  "success": false,
+  "error": "INVALID_COMMAND",
+  "message": "I can only help with chart customization (colors, line thickness, grid, tooltips). Please ask about chart appearance instead."
+}
+
+Valid chart-related requests include:
+- Color changes: "make it blue", "red background", "green line"
+- Line properties: "thicker line", "thin line", "bold line"
+- Visual elements: "hide grid", "show tooltip", "remove grid"
+- Data visualization: "sales data in blue", "show values"
+
+Invalid requests (return INVALID_COMMAND error):
+- General questions: "what is the weather?", "how are you?"
+- Math/calculations: "what is 2+2?", "calculate this"
+- Personal info: "what's your name?", "who made you?"
+- Non-chart tasks: "write a story", "translate this", "explain quantum physics"
+
 IMPORTANT: ALWAYS include ALL fields in your response, even if the user doesn't mention them. Use existing values or sensible defaults.
 
-Response format (ALWAYS include ALL these fields):
+Response format for VALID requests (ALWAYS include ALL these fields):
 {
   "success": true,
   "config": {
-    "lineColor": "#RRGGBB",
-    "gradientStartColor": "#RRGGBB", 
-    "gradientEndColor": "#RRGGBB",
+    "lineColor": "#0000FF",
+    "gradientStartColor": "#0000FF", 
+    "gradientEndColor": "#0000FF",
     "lineWidth": number,
     "showGrid": boolean,
     "showTooltip": boolean,
@@ -180,7 +215,7 @@ Apply the color rules from the system prompt.''',
     };
 
     final response = await clientHttp.post(
-      endpoint,
+      'https://api.openai.com/v1/chat/completions',
       data: jsonEncode(requestBody),
       headers: {
         'Content-Type': 'application/json',
@@ -188,124 +223,34 @@ Apply the color rules from the system prompt.''',
       },
     );
 
+    log(
+      'LLM API response status: ${response.statusCode}',
+      name: 'LLMRepository',
+    );
+    log(
+      'Response success: ${response.isStatusCodeSuccess}',
+      name: 'LLMRepository',
+    );
+
     if (response.isStatusCodeSuccess && response.data != null) {
       final data = response.data as Map<String, dynamic>;
-      return data['choices']?[0]?['message']?['content'];
-    }
-
-    return null;
-  }
-
-  Map<String, dynamic>? _parseStructuredResponse(String response) {
-    String cleanResponse = response.trim();
-    if (cleanResponse.startsWith('```json')) {
-      cleanResponse = cleanResponse.replaceFirst('```json', '');
-    }
-    if (cleanResponse.endsWith('```')) {
-      cleanResponse = cleanResponse.substring(
-        0,
-        cleanResponse.lastIndexOf('```'),
+      final content = data['choices']?[0]?['message']?['content'];
+      log(
+        'LLM response content length: ${content?.length ?? 0}',
+        name: 'LLMRepository',
       );
+      return content;
     }
 
-    try {
-      final parsed = jsonDecode(cleanResponse.trim());
-
-      if (parsed['success'] == true && parsed['config'] != null) {
-        return convertToFlutterConfig(parsed['config']);
-      }
-    } catch (e) {
-      // Silently handle JSON parsing errors
-    }
-
+    log(
+      'LLM API call failed - status: ${response.statusCode}, data: ${response.data}',
+      name: 'LLMRepository',
+    );
     return null;
-  }
-
-  Map<String, dynamic> convertToFlutterConfig(Map<String, dynamic> config) {
-    final defaultValues = [
-      10.0,
-      25.0,
-      15.0,
-      40.0,
-      30.0,
-      55.0,
-      45.0,
-      70.0,
-      60.0,
-      85.0,
-    ];
-    final defaultLineColor = '#0000FF';
-    final defaultGradientStart = '#0000FF';
-    final defaultGradientEnd = '#0000FF';
-
-    final lineColor = config['lineColor'] ?? defaultLineColor;
-    String gradientStart = config['gradientStartColor'] ?? defaultGradientStart;
-    String gradientEnd = config['gradientEndColor'] ?? defaultGradientEnd;
-
-    if (config['lineColor'] != null &&
-        (config['gradientStartColor'] == null ||
-            config['gradientEndColor'] == null)) {
-      gradientStart = lineColor;
-      gradientEnd = lineColor;
-    }
-
-    return {
-      'lineColor': _hexToColor(lineColor),
-      'gradientStartColor': _hexToColorWithOpacity(gradientStart, 0.2),
-      'gradientEndColor': _hexToColorWithOpacity(gradientEnd, 0.05),
-      'lineWidth':
-          config['lineWidth'] != null
-              ? (config['lineWidth'] as num).toDouble()
-              : 2.5,
-      'showGrid': config['showGrid'] ?? true,
-      'showTooltip': config['showTooltip'] ?? true,
-      'values':
-          config['values'] != null
-              ? (config['values'] as List)
-                  .map((v) => (v as num).toDouble())
-                  .toList()
-              : defaultValues,
-      'description': config['description'] ?? 'Configuration updated',
-    };
-  }
-
-  Color _hexToColor(String hex) {
-    try {
-      hex = hex.replaceFirst('#', '');
-      if (hex.length != 6) {
-        hex = '0000FF';
-      }
-      return Color(int.parse('FF$hex', radix: 16));
-    } catch (e) {
-      return const Color(0xFF0000FF);
-    }
-  }
-
-  Color _hexToColorWithOpacity(String hex, double opacity) {
-    try {
-      hex = hex.replaceFirst('#', '');
-      if (hex.length != 6) {
-        hex = '0000FF';
-      }
-
-      final alpha = (opacity * 255).round().toRadixString(16).padLeft(2, '0');
-      return Color(int.parse('$alpha$hex', radix: 16));
-    } catch (e) {
-      final alpha = (opacity * 255).round().toRadixString(16).padLeft(2, '0');
-      return Color(int.parse('${alpha}0000FF', radix: 16));
-    }
   }
 
   @override
   ChartDataModel configToChartData(Map<String, dynamic> config) {
-    return ChartDataModel(
-      values: List<double>.from(config['values']),
-      lineColor: config['lineColor'] as Color,
-      gradientStartColor: config['gradientStartColor'] as Color,
-      gradientEndColor: config['gradientEndColor'] as Color,
-      lineWidth: config['lineWidth'].toDouble(),
-      showGrid: config['showGrid'],
-      showTooltip: config['showTooltip'],
-    );
+    return LlmParser.configToChartData(config);
   }
 }
