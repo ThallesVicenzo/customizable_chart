@@ -219,6 +219,59 @@
   "promptErrorProcessingRequest": "Erro ao processar solicitação",
   "@promptErrorProcessingRequest": {
     "description": "Mensagem de erro quando há um problema ao processar a solicitação"
+  },
+  "promptErrorInvalidCommand": "Erro: Comando inválido.",
+  "@promptErrorInvalidCommand": {
+    "description": "Mensagem de erro para comando inválido"
+  },
+  "freeTrialExpired": "Seu período de teste gratuito expirou.",
+  "@freeTrialExpired": {
+    "description": "Mensagem informando que o teste gratuito expirou"
+  },
+  "freeTrialActive": "Teste gratuito ativo.",
+  "@freeTrialActive": {
+    "description": "Mensagem informando que o teste gratuito está ativo"
+  },
+  "authenticationError": "Erro de autenticação. Por favor, verifique sua chave da API.",
+  "@authenticationError": {
+    "description": "Mensagem de erro de autenticação"
+  },
+  "apiQuotaExceeded": "Limite de uso da API excedido.",
+  "@apiQuotaExceeded": {
+    "description": "Mensagem informando que o limite da API foi excedido"
+  },
+  "modelNotAvailable": "Modelo não disponível.",
+  "@modelNotAvailable": {
+    "description": "Mensagem informando que o modelo não está disponível"
+  },
+  "unexpectedError": "Erro inesperado. Tente novamente.",
+  "@unexpectedError": {
+    "description": "Mensagem para erro inesperado"
+  },
+  "unableToInterpretResponse": "Não foi possível interpretar a resposta da IA.",
+  "@unableToInterpretResponse": {
+    "description": "Mensagem para resposta não interpretável"
+  },
+  "networkError": "Erro de rede. Verifique sua conexão.",
+  "@networkError": {
+    "description": "Mensagem para erro de rede"
+  },
+  "personalApiKeyActive": "Chave da API pessoal ativa.",
+  "@personalApiKeyActive": {
+    "description": "Mensagem informando que a chave pessoal está ativa"
+  },
+  "freeTrialRemaining": "Dias restantes no teste gratuito: {remaining}",
+  "@freeTrialRemaining": {
+    "description": "Mensagem informando os dias restantes no teste gratuito",
+    "placeholders": {
+      "remaining": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "freeTrialExpiredStatus": "Status: Teste gratuito expirado.",
+  "@freeTrialExpiredStatus": {
+    "description": "Mensagem de status para teste gratuito expirado"
   }
-
 }

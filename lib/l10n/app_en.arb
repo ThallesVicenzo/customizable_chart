@@ -86,6 +86,10 @@
   "@promptErrorNotRecognized": {
     "description": "Error message when prompt is not recognized"
   },
+  "promptErrorInvalidCommand": "Invalid command! I can only help with chart colors and appearance. Try commands like: 'make it blue', 'red background', 'thicker line', or 'hide grid'.",
+  "@promptErrorInvalidCommand": {
+    "description": "Error message when user gives non-chart related command"
+  },
   "promptRedBold": "make it red and bold",
   "@promptRedBold": {
     "description": "Prompt to make chart red and bold"
@@ -219,5 +223,73 @@
   "promptErrorProcessingRequest": "Error processing request",
   "@promptErrorProcessingRequest": {
     "description": "Error message when there is an issue processing the request"
+  },
+  "freeTrialExpired": "Your free AI trials ({totalUses}) have been used up!\n\nTo continue using AI functionality:\n\n1. Access app settings\n2. Tap \"Configure OpenAI API\"\n3. Enter your API key\n\nTo get a free key:\n• Visit: https://platform.openai.com/api-keys\n• Create an account (if you don't have one)\n• Generate a new API Key\n\nOpenAI offers free credits for new users!",
+  "@freeTrialExpired": {
+    "description": "Message when free trial is expired",
+    "placeholders": {
+      "totalUses": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "freeTrialActive": "Using free trial mode ({remaining} uses remaining)\n\nFor unlimited access, configure your OpenAI API key:\n\n1. Access app settings\n2. Tap \"Configure OpenAI API\"\n3. Enter your API key\n\nTo get a free key:\n• Visit: https://platform.openai.com/api-keys\n• Create an account (if you don't have one)\n• Generate a new API Key\n\nOpenAI offers free credits for new users!",
+  "@freeTrialActive": {
+    "description": "Message when free trial is active",
+    "placeholders": {
+      "remaining": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "authenticationError": "Authentication error. Please check your API key configuration.",
+  "@authenticationError": {
+    "description": "General authentication error message"
+  },
+  "apiQuotaExceeded": "OpenAI API quota exceeded. To continue using AI:\n\n1. Visit: https://platform.openai.com/settings/organization/billing\n2. Add a payment method\n3. Or wait for the free quota reset\n\nAlternatively, you can use the example buttons that work without AI.",
+  "@apiQuotaExceeded": {
+    "description": "Message when API quota is exceeded"
+  },
+  "modelNotAvailable": "AI model not available. Your OpenAI account may not have access to GPT-3.5.\n\nTry using the example buttons that work without AI.",
+  "@modelNotAvailable": {
+    "description": "Message when AI model is not available"
+  },
+  "unexpectedError": "Unexpected error: {error}\n\nCheck your OpenAI API key and try again.",
+  "@unexpectedError": {
+    "description": "Unexpected error message",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Connection timeout"
+      }
+    }
+  },
+  "unableToInterpretResponse": "Unable to interpret AI response. Try rephrasing your request.",
+  "@unableToInterpretResponse": {
+    "description": "Message when AI response cannot be parsed"
+  },
+  "networkError": "Error connecting to OpenAI API. Check your internet connection and try again.",
+  "@networkError": {
+    "description": "Network connection error message"
+  },
+  "personalApiKeyActive": "Using your personal API key - unlimited access",
+  "@personalApiKeyActive": {
+    "description": "Status message when user has personal API key"
+  },
+  "freeTrialRemaining": "Free trial: {remaining} uses remaining",
+  "@freeTrialRemaining": {
+    "description": "Status message for remaining free trial uses",
+    "placeholders": {
+      "remaining": {
+        "type": "int",
+        "example": "2"
+      }
+    }
+  },
+  "freeTrialExpiredStatus": "Free trial expired - configure your API key for unlimited access",
+  "@freeTrialExpiredStatus": {
+    "description": "Status message when free trial is expired"
   }
 }
