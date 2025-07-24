@@ -68,9 +68,11 @@ With OpenAI API configured, use more complex natural language:
 - `"Create a professional blue theme for presentation"`
 - `"Use warm colors with elegant styling"`
 
+> 💡 **Free Trial Available!** You can try AI commands up to **3 times** without configuring an API key. After that, you'll need to add your own OpenAI API key to continue using AI features.
+
 ### ⚙️ AI Configuration
 
-To unlock advanced AI features:
+To unlock unlimited AI features:
 
 1. **Get your OpenAI API Key**
    - Visit [OpenAI API Keys](https://platform.openai.com/api-keys)
@@ -84,7 +86,8 @@ To unlock advanced AI features:
 
 3. **Start using AI commands**
    - The app will automatically use AI for complex prompts
-   - Fallback to built-in commands if API is unavailable
+   - Without API key: 3 free AI attempts, then fallback to built-in commands
+   - With API key: Unlimited AI usage
 
 ### 🏗️ Architecture
 
@@ -104,37 +107,53 @@ lib/
 │   └── components/                  # Reusable UI components
 ├── viewmodel/                       # State management
 └── l10n/                           # Internationalization files
+    ├── app_en.arb                  # English translations
+    └── app_pt.arb                  # Portuguese translations
+```
+
+### 🌐 Internationalization (i18n)
+
+The app features complete bilingual support:
+
+- **ARB Files**: Translation strings stored in Application Resource Bundle format
+- **Automatic Locale Detection**: App automatically detects device language
+- **Runtime Language Switching**: Users can switch between English and Portuguese
+- **Contextual Translations**: All UI elements, prompts, and messages are localized
+- **Fallback Support**: Graceful fallback to English if translation is missing
+
+### 🧪 Testing
+
+The project includes comprehensive unit tests covering:
+
+- **Model Tests**: Chart data model validation and transformations
+- **ViewModel Tests**: Business logic and state management
+- **Repository Tests**: AI integration and prompt processing
+- **Service Tests**: Core functionality and error handling
+
+Run tests with:
+```bash
+flutter test
 ```
 
 ### 🛠️ Built With
-
-- **[Flutter](https://flutter.dev/)** - Cross-platform UI framework
-- **[fl_chart](https://pub.dev/packages/fl_chart)** - Beautiful chart library
-- **[get_it](https://pub.dev/packages/get_it)** - Dependency injection
-- **[dio](https://pub.dev/packages/dio)** - HTTP client for API calls
-- **[flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)** - Secure key storage
 
 ---
 
 ## Português
 
-<div align="center">
+Um aplicativo Flutter que permite a personalização de gráficos por meio de prompts de texto em linguagem natural, suportando tanto o processamento inteligente de IA quanto comandos predefinidos.
 
-Um aplicativo Flutter que permite customizar gráficos através de prompts de texto em linguagem natural, suportando processamento inteligente com IA e comandos predefinidos.
+### ✨ Principais Recursos
 
-</div>
-
-### ✨ Funcionalidades Principais
-
-- 📊 **Gráfico de Linha Interativo** - Gráfico customizável com animações suaves
-- 🎨 **Estilização em Tempo Real** - Altere cores, espessura e propriedades visuais instantaneamente
-- 💬 **Processamento de Linguagem Natural** - Controle gráficos usando comandos de texto intuitivos
-- 🤖 **Integração com IA** - Processamento avançado de prompts com API da OpenAI
+- 📊 **Gráfico de Linhas Interativo** - Gráfico personalizável com animações suaves
+- 🎨 **Estilo em Tempo Real** - Altere cores, espessura e propriedades visuais instantaneamente
+- 💬 **Processamento de Linguagem Natural** - Controle os gráficos usando comandos de texto intuitivos
+- 🤖 **Integração com IA** - Processamento avançado de prompts com a API OpenAI
 - 🌐 **Suporte Bilíngue** - Localização completa em inglês e português
-- ⚙️ **Configurações Inteligentes** - Gerenciamento fácil de chaves API com armazenamento seguro
-- 📱 **Design Responsivo** - Interface moderna que funciona em todos os tamanhos de tela
+- ⚙️ **Configurações Inteligentes** - Gerenciamento fácil da chave da API com armazenamento seguro
+- 📱 **Design Responsivo** - UI moderna que funciona em todos os tamanhos de tela
 
-### 📱 Visualização do App
+### 📱 Prévia do App
 
 #### Interface em Português
 <div align="center">
@@ -162,38 +181,41 @@ Um aplicativo Flutter que permite customizar gráficos através de prompts de te
 
 ### 🎯 Exemplos de Uso
 
-#### Comandos Integrados
+#### Comandos Predefinidos
 Experimente estes prompts predefinidos para resultados imediatos:
-- `"deixe vermelho e grosso"` - Cria um gráfico de linha vermelha em negrito
-- `"mostre dados de vendas em azul"` - Gera visualização de vendas com tema azul
-- `"crie gráfico minimalista com grade"` - Design minimalista com linhas de grade
-- `"visão laranja vibrante crescente"` - Visualização dinâmica laranja crescente
-- `"tema roxo com linhas grossas"` - Estilo roxo com espessura de linha aprimorada
+- `"torne-o vermelho e negrito"` - Cria um gráfico de linhas vermelhas e em negrito
+- `"mostre os dados de vendas em azul"` - Gera uma visualização de vendas com tema azul
+- `"crie um gráfico minimalista com grade"` - Design minimalista com linhas de grade
+- `"visualização de tendência em laranja brilhante"` - Visualização de tendência dinâmica em laranja
+- `"tema roxo com linhas grossas"` - Estilo roxo com espessura de linha aumentada
 
-#### Comandos com IA (com chave API)
-Com a API da OpenAI configurada, use linguagem natural mais complexa:
-- `"Mude o gráfico para verde com fundo gradiente"`
-- `"Deixe a linha mais grossa e adicione mais pontos de dados"`
+#### Comandos Potencializados por IA (com chave da API)
+Com a API OpenAI configurada, use linguagem natural mais complexa:
+- `"Altere o gráfico para verde com um fundo gradiente"`
+- `"Aumente a espessura da linha e adicione mais pontos de dados"`
 - `"Crie um tema azul profissional para apresentação"`
 - `"Use cores quentes com estilo elegante"`
 
+> 💡 **Teste Grátis Disponível!** Você pode experimentar comandos de IA até **3 vezes** sem configurar uma chave da API. Depois disso, será necessário adicionar sua própria chave da API OpenAI para continuar usando os recursos de IA.
+
 ### ⚙️ Configuração da IA
 
-Para desbloquear recursos avançados de IA:
+Para desbloquear recursos ilimitados de IA:
 
-1. **Obtenha sua chave da API OpenAI**
+1. **Obtenha sua Chave da API OpenAI**
    - Visite [Chaves da API OpenAI](https://platform.openai.com/api-keys)
-   - Crie uma nova chave API
+   - Crie uma nova chave da API
    - Copie a chave gerada
 
 2. **Configure no app**
    - Abra a página de Configurações (ícone ⚙️)
-   - Digite sua chave API no campo "Chave da API OpenAI"
+   - Insira sua chave da API no campo "Chave da API OpenAI"
    - Toque em "Salvar Chave"
 
 3. **Comece a usar comandos de IA**
-   - O app usará automaticamente IA para prompts complexos
-   - Fallback para comandos integrados se a API estiver indisponível
+   - O app usará automaticamente a IA para prompts complexos
+   - Sem chave da API: 3 tentativas gratuitas de IA, depois volta para comandos predefinidos
+   - Com chave da API: Uso ilimitado de IA
 
 ### 🏗️ Arquitetura
 
@@ -213,37 +235,32 @@ lib/
 │   └── components/                  # Componentes de UI reutilizáveis
 ├── viewmodel/                       # Gerenciamento de estado
 └── l10n/                           # Arquivos de internacionalização
+    ├── app_en.arb                  # Traduções em inglês
+    └── app_pt.arb                  # Traduções em português
+```
+
+### 🌐 Internacionalização (i18n)
+
+O app possui suporte bilíngue completo:
+
+- **Arquivos ARB**: Strings de tradução armazenadas em formato Application Resource Bundle
+- **Detecção Automática de Idioma**: App detecta automaticamente o idioma do dispositivo
+- **Troca de Idioma em Tempo Real**: Usuários podem alternar entre inglês e português
+- **Traduções Contextuais**: Todos os elementos da UI, prompts e mensagens são localizados
+- **Suporte a Fallback**: Fallback gracioso para inglês se a tradução estiver ausente
+
+### 🧪 Testes
+
+O projeto inclui testes unitários abrangentes cobrindo:
+
+- **Testes de Modelo**: Validação e transformações do modelo de dados do gráfico
+- **Testes de ViewModel**: Lógica de negócio e gerenciamento de estado
+- **Testes de Repository**: Integração com IA e processamento de prompts
+- **Testes de Serviços**: Funcionalidade principal e tratamento de erros
+
+Execute os testes com:
+```bash
+flutter test
 ```
 
 ### 🛠️ Construído Com
-
-- **[Flutter](https://flutter.dev/)** - Framework de UI multiplataforma
-- **[fl_chart](https://pub.dev/packages/fl_chart)** - Biblioteca de gráficos bonitos
-- **[get_it](https://pub.dev/packages/get_it)** - Injeção de dependência
-- **[dio](https://pub.dev/packages/dio)** - Cliente HTTP para chamadas de API
-- **[flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)** - Armazenamento seguro de chaves
-
-### 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-### 🔒 Segurança
-
-- ⚠️ **Nunca faça commit de sua chave API no repositório**
-- ✅ Chaves API são armazenadas com segurança no dispositivo
-- ✅ Use variáveis de ambiente para dados sensíveis
-- ✅ Considere usar secrets do CI/CD para deployment
-
-### 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
-<div align="center">
-<p>Feito com ❤️ usando Flutter</p>
-</div>
