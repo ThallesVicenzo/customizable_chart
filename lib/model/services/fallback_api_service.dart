@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/keys/secure_storage_keys.dart';
+import 'package:customizable_chart/utils/secure_storage/secure_storage.dart';
+import 'package:customizable_chart/utils/secure_storage/keys/secure_storage_keys.dart';
 
 abstract class FallbackApiService {
   static const int maxUsageCount = 3;

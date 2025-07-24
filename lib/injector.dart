@@ -7,8 +7,8 @@ import 'package:customizable_chart/model/services/environment.dart';
 import 'package:customizable_chart/model/repositories/llm_repository.dart';
 import 'package:customizable_chart/viewmodel/chart_viewmodel.dart';
 import 'package:customizable_chart/viewmodel/settings_viewmodel.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage_impl.dart';
+import 'package:customizable_chart/utils/secure_storage/secure_storage.dart';
+import 'package:customizable_chart/utils/secure_storage/secure_storage_impl.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;

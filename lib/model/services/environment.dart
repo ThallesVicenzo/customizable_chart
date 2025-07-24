@@ -1,6 +1,6 @@
 import 'dart:developer';
-import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/keys/secure_storage_keys.dart';
+import 'package:customizable_chart/utils/secure_storage/secure_storage.dart';
+import 'package:customizable_chart/utils/secure_storage/keys/secure_storage_keys.dart';
 import 'package:customizable_chart/model/services/fallback_api_service.dart';
 
 const String endpoint = 'https://api.openai.com/v1/chat/completions';

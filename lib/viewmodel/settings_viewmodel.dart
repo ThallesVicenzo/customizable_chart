@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/secure_storage.dart';
-import 'package:customizable_chart/viewmodel/services/secure_storage/keys/secure_storage_keys.dart';
+import 'package:customizable_chart/utils/secure_storage/secure_storage.dart';
+import 'package:customizable_chart/utils/secure_storage/keys/secure_storage_keys.dart';
 import 'package:customizable_chart/model/services/environment.dart';
 import 'package:customizable_chart/l10n/global_app_localizations.dart';
 import 'package:customizable_chart/injector.dart';
