@@ -46,7 +46,12 @@ A Flutter application that allows chart customization through natural language t
    flutter pub get
    ```
 
-3. **Run the app**
+3. **Install Internacionalizations**
+   ```bash
+   flutter gen-l10n
+   ```
+
+4. **Run the app**
    ```bash
    flutter run
    ```
@@ -111,16 +116,6 @@ lib/
     └── app_pt.arb                  # Portuguese translations
 ```
 
-### 🌐 Internationalization (i18n)
-
-The app features complete bilingual support:
-
-- **ARB Files**: Translation strings stored in Application Resource Bundle format
-- **Automatic Locale Detection**: App automatically detects device language
-- **Runtime Language Switching**: Users can switch between English and Portuguese
-- **Contextual Translations**: All UI elements, prompts, and messages are localized
-- **Fallback Support**: Graceful fallback to English if translation is missing
-
 ### 🧪 Testing
 
 The project includes comprehensive unit tests covering:
@@ -173,8 +168,12 @@ Um aplicativo Flutter que permite a personalização de gráficos por meio de pr
    ```bash
    flutter pub get
    ```
+3. **Gere as internacionalizações**
+   ```bash
+   flutter gen-l10n
+   ```
 
-3. **Execute o app**
+4. **Execute o app**
    ```bash
    flutter run
    ```
@@ -239,16 +238,6 @@ lib/
     └── app_pt.arb                  # Traduções em português
 ```
 
-### 🌐 Internacionalização (i18n)
-
-O app possui suporte bilíngue completo:
-
-- **Arquivos ARB**: Strings de tradução armazenadas em formato Application Resource Bundle
-- **Detecção Automática de Idioma**: App detecta automaticamente o idioma do dispositivo
-- **Troca de Idioma em Tempo Real**: Usuários podem alternar entre inglês e português
-- **Traduções Contextuais**: Todos os elementos da UI, prompts e mensagens são localizados
-- **Suporte a Fallback**: Fallback gracioso para inglês se a tradução estiver ausente
-
 ### 🧪 Testes
 
 O projeto inclui testes unitários abrangentes cobrindo:
@@ -262,5 +251,3 @@ Execute os testes com:
 ```bash
 flutter test
 ```
-
-### 🛠️ Construído Com
