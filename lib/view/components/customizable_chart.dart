@@ -5,6 +5,7 @@ import '../../l10n/global_app_localizations.dart';
 import '../../injector.dart';
 
 class CustomizableChart extends StatelessWidget {
+  static const Key chartKey = Key('customizable_chart');
   final ChartDataModel chartData;
 
   const CustomizableChart({super.key, required this.chartData});
@@ -28,6 +29,7 @@ class CustomizableChart extends StatelessWidget {
     final double horizontalInterval = maxY / 4;
 
     return Container(
+      key: chartKey,
       padding: const EdgeInsets.all(16),
       child: LineChart(
         LineChartData(
