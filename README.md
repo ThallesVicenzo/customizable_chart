@@ -118,21 +118,48 @@ lib/
 
 ### 🧪 Testing
 
-The project includes comprehensive unit tests covering:
+The project includes comprehensive testing coverage with both unit and integration tests:
 
+#### Unit Tests
 - **Model Tests**: Chart data model validation and transformations
 - **ViewModel Tests**: Business logic and state management
 - **Repository Tests**: AI integration and prompt processing
 - **Service Tests**: Core functionality and error handling
 
-Run tests with:
+Run unit tests with:
 ```bash
 flutter test
 ```
 
-### 🛠️ Built With
+#### Integration Tests
+The app features a robust integration testing architecture using **Mockito** and **build_runner** for professional mock generation:
 
----
+- **Modular Architecture**: Clean separation with helpers, flows, and test files
+- **Critical Flow Coverage**: Complete user journey testing (AI commands, fallback behavior, navigation, settings, reset)
+- **Cross-Platform**: Tested on both Android emulators and iOS devices
+- **Mock-Driven**: Professional mocks with automatic generation via `@GenerateMocks`
+
+**Architecture:**
+```
+integration_test/
+├── chart_integration_test.dart          # Main integration test
+├── helpers/
+│   └── mock_helper.dart                 # Centralized mock setup
+└── test_flows/
+    └── chart_customization_flow.dart    # Organized test flows
+
+test_driver/
+└── integration_test.dart                # Test driver (host controller)
+```
+
+Run integration tests:
+```bash
+# Android Emulator
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/chart_integration_test.dart -d emulator-5554
+
+# iOS Device (with wireless connection)
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/chart_integration_test.dart -d <device-id> --host-vmservice-port 0
+```
 
 ## Português
 
@@ -240,14 +267,45 @@ lib/
 
 ### 🧪 Testes
 
-O projeto inclui testes unitários abrangentes cobrindo:
+O projeto inclui cobertura abrangente de testes com testes unitários e de integração:
 
+#### Testes Unitários
 - **Testes de Modelo**: Validação e transformações do modelo de dados do gráfico
 - **Testes de ViewModel**: Lógica de negócio e gerenciamento de estado
 - **Testes de Repository**: Integração com IA e processamento de prompts
 - **Testes de Serviços**: Funcionalidade principal e tratamento de erros
 
-Execute os testes com:
+Execute os testes unitários com:
 ```bash
 flutter test
+```
+
+#### Testes de Integração
+O app possui uma arquitetura robusta de testes de integração usando **Mockito** e **build_runner** para geração profissional de mocks:
+
+- **Arquitetura Modular**: Separação limpa com helpers, flows e arquivos de teste
+- **Cobertura de Fluxo Crítico**: Teste completo da jornada do usuário (comandos AI, comportamento de fallback, navegação, configurações, reset)
+- **Multi-Plataforma**: Testado em emuladores Android e dispositivos iOS
+- **Orientado a Mocks**: Mocks profissionais com geração automática via `@GenerateMocks`
+
+**Arquitetura:**
+```
+integration_test/
+├── chart_integration_test.dart          # Teste de integração principal
+├── helpers/
+│   └── mock_helper.dart                 # Configuração centralizada de mocks
+└── test_flows/
+    └── chart_customization_flow.dart    # Flows de teste organizados
+
+test_driver/
+└── integration_test.dart                # Driver de teste (controlador host)
+```
+
+Execute os testes de integração:
+```bash
+# Emulador Android
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/chart_integration_test.dart -d emulator-5554
+
+# Dispositivo iOS (com conexão wireless)
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/chart_integration_test.dart -d <device-id> --host-vmservice-port 0
 ```
