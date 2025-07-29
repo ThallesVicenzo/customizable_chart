@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:customizable_chart/main.dart' as app;
@@ -61,11 +63,11 @@ void main() {
         // Final verification
         await testFlow.verifyAllCriticalComponentsPresent(tester);
 
-        print('✅ Integration Test Completed Successfully!');
-        print(
+        log('✅ Integration Test Completed Successfully!');
+        log(
           '✅ Tested: AI commands, fallback behavior, navigation, settings, reset',
         );
-        print('✅ Critical user flow validation passed');
+        log('✅ Critical user flow validation passed');
       },
     );
 
@@ -79,7 +81,7 @@ void main() {
       mockHelper.setApiCallToFail(true);
       await testFlow.testErrorHandlingScenarios(tester);
 
-      print('✅ Error handling test completed successfully!');
+      log('✅ Error handling test completed successfully!');
     });
   });
 }

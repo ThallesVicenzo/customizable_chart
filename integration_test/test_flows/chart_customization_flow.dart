@@ -1,9 +1,9 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Class containing all test flows for chart customization
 class ChartCustomizationFlow {
-  
   /// Verify that the app loads successfully with all basic components
   Future<void> verifyAppLoadsSuccessfully(WidgetTester tester) async {
     // Check for basic app structure
@@ -11,8 +11,11 @@ class ChartCustomizationFlow {
     expect(find.byType(TextField), findsOneWidget);
     expect(find.byIcon(Icons.settings), findsOneWidget);
     expect(find.byIcon(Icons.refresh), findsOneWidget);
-    
-    print('✅ App loaded successfully with all basic components');
+
+    log(
+      '✅ App loaded successfully with all basic components',
+      name: 'IntegrationTest',
+    );
   }
 
   /// Test AI-powered chart customization
@@ -36,18 +39,21 @@ class ChartCustomizationFlow {
     // Verify prompt field was cleared after successful processing
     final textField = tester.widget<TextField>(find.byType(TextField));
     expect(textField.controller?.text, isEmpty);
-    
-    print('✅ AI-powered customization tested successfully');
+
+    log(
+      '✅ AI-powered customization tested successfully',
+      name: 'IntegrationTest',
+    );
   }
 
   /// Test fallback to preset commands when API fails
   Future<void> testPresetCommandFallback(WidgetTester tester) async {
     // Try a preset command that should work with hardcoded fallback
     final presetButton = find.text('"deixe vermelho e grosso"');
-    
+
     if (presetButton.evaluate().isNotEmpty) {
       expect(presetButton, findsOneWidget);
-      
+
       // Use warnIfMissed: false to silence the warning if button is obscured
       await tester.tap(presetButton, warnIfMissed: false);
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -55,11 +61,20 @@ class ChartCustomizationFlow {
       // Verify the preset button worked (fallback to hardcoded)
       // Even with API failure, preset buttons should still work
       expect(find.byType(CircularProgressIndicator), findsNothing);
-      
-      print('✅ Preset command fallback tested successfully');
+
+      log(
+        '✅ Preset command fallback tested successfully',
+        name: 'IntegrationTest',
+      );
     } else {
-      print('⚠️ Preset button not found, skipping preset command test');
-      print('✅ Preset command fallback tested successfully (skipped)');
+      log(
+        '⚠️ Preset button not found, skipping preset command test',
+        name: 'IntegrationTest',
+      );
+      log(
+        '✅ Preset command fallback tested successfully (skipped)',
+        name: 'IntegrationTest',
+      );
     }
   }
 
@@ -74,8 +89,8 @@ class ChartCustomizationFlow {
     // Instead of hardcoded text, look for settings-specific widgets
     expect(find.byType(TextField), findsAtLeastNWidgets(1)); // API key field
     expect(find.byType(ElevatedButton), findsAtLeastNWidgets(1)); // Save button
-    
-    print('✅ Settings navigation tested successfully');
+
+    log('✅ Settings navigation tested successfully');
   }
 
   /// Test API key configuration
@@ -83,7 +98,7 @@ class ChartCustomizationFlow {
     // Find the API key text field (should be the last one on settings page)
     final apiKeyFields = find.byType(TextField);
     expect(apiKeyFields, findsAtLeastNWidgets(1));
-    
+
     await tester.enterText(apiKeyFields.last, 'test-api-key-123');
     await tester.pumpAndSettle();
 
@@ -97,9 +112,12 @@ class ChartCustomizationFlow {
     // This could be a check icon or success message
     final successIcon = find.byIcon(Icons.check_circle);
     final checkIcon = find.byIcon(Icons.check);
-    expect(successIcon.evaluate().isNotEmpty || checkIcon.evaluate().isNotEmpty, isTrue);
-    
-    print('✅ API key configuration tested successfully');
+    expect(
+      successIcon.evaluate().isNotEmpty || checkIcon.evaluate().isNotEmpty,
+      isTrue,
+    );
+
+    log('✅ API key configuration tested successfully', name: 'IntegrationTest');
   }
 
   /// Test return to chart page and reset functionality
@@ -108,7 +126,7 @@ class ChartCustomizationFlow {
     final backButton = find.byIcon(Icons.arrow_back);
     final backButtonIOS = find.byIcon(Icons.arrow_back_ios);
     final closeButton = find.byIcon(Icons.close);
-    
+
     if (backButton.evaluate().isNotEmpty) {
       await tester.tap(backButton);
     } else if (backButtonIOS.evaluate().isNotEmpty) {
@@ -117,25 +135,34 @@ class ChartCustomizationFlow {
       await tester.tap(closeButton);
     } else {
       // If no back button found, skip this step and assume we're already on main page
-      print('⚠️ No back button found, assuming we\'re on main page');
+      log(
+        '⚠️ No back button found, assuming we\'re on main page',
+        name: 'IntegrationTest',
+      );
     }
-    
+
     await tester.pumpAndSettle();
 
     // Verify we're back on chart page by checking for chart-specific elements
     expect(find.byType(TextField), findsOneWidget); // Prompt field
-    
+
     // Test reset functionality if refresh button exists
     final resetButton = find.byIcon(Icons.refresh);
     if (resetButton.evaluate().isNotEmpty) {
       await tester.tap(resetButton);
       await tester.pumpAndSettle();
-      print('✅ Reset functionality tested');
+      log('✅ Reset functionality tested', name: 'IntegrationTest');
     } else {
-      print('⚠️ Reset button not found, skipping reset test');
+      log(
+        '⚠️ Reset button not found, skipping reset test',
+        name: 'IntegrationTest',
+      );
     }
-    
-    print('✅ Return to chart and reset tested successfully');
+
+    log(
+      '✅ Return to chart and reset tested successfully',
+      name: 'IntegrationTest',
+    );
   }
 
   /// Test multiple preset buttons
@@ -148,13 +175,18 @@ class ChartCustomizationFlow {
     }
 
     // Test minimal preset button
-    final minimalPresetButton = find.text('"crie gráfico minimalista com grade"');
+    final minimalPresetButton = find.text(
+      '"crie gráfico minimalista com grade"',
+    );
     if (minimalPresetButton.evaluate().isNotEmpty) {
       await tester.tap(minimalPresetButton);
       await tester.pumpAndSettle();
     }
-    
-    print('✅ Multiple preset buttons tested successfully');
+
+    log(
+      '✅ Multiple preset buttons tested successfully',
+      name: 'IntegrationTest',
+    );
   }
 
   /// Verify all critical components are present
@@ -163,42 +195,42 @@ class ChartCustomizationFlow {
     final chartWidget = find.byKey(const Key('customizable_chart'));
     if (chartWidget.evaluate().isNotEmpty) {
       expect(chartWidget, findsOneWidget);
-      print('✅ Chart component found');
+      log('✅ Chart component found');
     } else {
-      print('⚠️ Chart component not found (may use different key)');
+      log('⚠️ Chart component not found (may use different key)');
     }
 
     // Prompt section should be present
     expect(find.byType(TextField), findsOneWidget);
-    print('✅ Prompt TextField found');
+    log('✅ Prompt TextField found');
 
     // Preset buttons should be present
     final presetButton = find.text('"deixe vermelho e grosso"');
     if (presetButton.evaluate().isNotEmpty) {
       expect(presetButton, findsOneWidget);
-      print('✅ Preset buttons found');
+      log('✅ Preset buttons found');
     } else {
-      print('⚠️ Preset buttons not found');
+      log('⚠️ Preset buttons not found');
     }
 
     // Navigation buttons should be present
     final settingsButton = find.byIcon(Icons.settings);
     if (settingsButton.evaluate().isNotEmpty) {
       expect(settingsButton, findsOneWidget);
-      print('✅ Settings button found');
+      log('✅ Settings button found');
     } else {
-      print('⚠️ Settings button not found');
+      log('⚠️ Settings button not found');
     }
-    
+
     final refreshButton = find.byIcon(Icons.refresh);
     if (refreshButton.evaluate().isNotEmpty) {
       expect(refreshButton, findsOneWidget);
-      print('✅ Refresh button found');
+      log('✅ Refresh button found');
     } else {
-      print('⚠️ Refresh button not found');
+      log('⚠️ Refresh button not found');
     }
-    
-    print('✅ All critical components verified successfully');
+
+    log('✅ All critical components verified successfully');
   }
 
   /// Test error handling scenarios
@@ -214,10 +246,10 @@ class ChartCustomizationFlow {
     // Should show error message via snackbar or other error indicator
     // We'll be more flexible here and just check the app didn't crash
     expect(find.byType(MaterialApp), findsOneWidget);
-    
+
     // Wait for any potential snackbar to disappear
     await tester.pumpAndSettle(const Duration(seconds: 3));
-    
-    print('✅ Error handling scenarios tested successfully');
+
+    log('✅ Error handling scenarios tested successfully');
   }
 }
